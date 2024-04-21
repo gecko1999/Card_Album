@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+{% block content %}
+<body>
+        <h1>Accounts Page</h1>
+        <p>This is the page where all accounts are listed</p>   
+        {% for account in accounts %}
+        <div class="accounts">
+        <h3>{{ account.username }}</h3><br>
+        <p>{{ account.id }}</p><br>
+        <p>{{ account.email }}</p><br>
+        <p>{{ account.date_created }}</p><br>
+        {% endfor %}
+        </div>
+</body>
+{% endblock %}
+</html>

@@ -1,0 +1,12 @@
+body{
+    background-color: grey;
+}
+
+.accounts{
+    border-style: groove;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    border: 3px solid #73AD21;
+    display: flex;
+}

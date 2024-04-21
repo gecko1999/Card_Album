@@ -1,0 +1,26 @@
+Front End: 
+    Languages: HTML, CSS, JS
+    Card ratio: 2/3 width/height
+    Book Effekt with 3x3 Cards on one site
+    Button to filter cards how you want
+
+
+https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
+
+
+Backend/Api:
+    Languages: Python/Flask
+    Api Type: Rest Api
+    Add User
+    Add Card
+    Change Card
+    Delete Card
+    Filter for specific Cards
+
+
+
+Database:
+    Languages: SQLAlchemy
+    Data for Profiles: Username, Email, Password
+    Data for Cards: Link to User, Sport, Brand, Set, Player, Year, Numbered, Number, NumberOf, Graded, Grade, Picture
+    
