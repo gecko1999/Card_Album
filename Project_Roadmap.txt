@@ -7,6 +7,7 @@ Front End:
 
 https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
 
+https://www.youtube.com/watch?v=dam0GPOAvVI&t=4362s
 
 Backend/Api:
     Languages: Python/Flask
@@ -24,3 +25,5 @@ Database:
     Data for Profiles: Username, Email, Password
     Data for Cards: Link to User, Sport, Brand, Set, Player, Year, Numbered, Number, NumberOf, Graded, Grade, Picture
     
+
+

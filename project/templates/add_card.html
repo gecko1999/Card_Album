@@ -1,0 +1,41 @@
+{% extends "base.html"   %}
+{% block title  %}Test{% endblock %}
+{% block body %}
+<body>
+    <div id="wrapper">
+      <h1>This is the Add Card Page</h1>
+      <p>This site is where you can add your cards</p>
+    </div>
+    <div id="wrapper">
+        <p>Please Add a Card</p>
+        <form method="post">
+            <label>Sport:</label><br>
+            <input type="text" name="sport"><br>
+            <label>Brand:</label>
+            <input type="text" name="brand"><br>
+            <label>Set</label><br>
+            <input type="text" name="set"><br>
+            <label>Player</label><br>
+            <input type="text" name="player"><br>
+            <label>Year</label><br>
+            <input type="number" name="year"><br>
+            <label>Numberd</label><br>
+            <input type="checkbox" name="numbered"><br>
+            <label>Number</label><br>
+            <input type="number" name="number"><br>
+            <label>Numbered to</label><br>
+            <input type="number" name="numberof"><br>
+            <label>Graded</label><br>
+            <input type="checkbox" name="graded"><br>
+            <label>Grading Company</label><br>
+            <input type="text" name="gradedby"><br>
+            <label>Grade</label><br>
+            <input type="number" name="grade"><br>
+            <input type="submit" value="add"><br>
+        </form>
+    </div>
+
+    
+</body>
+</html>
+{% endblock %}

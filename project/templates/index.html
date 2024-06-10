@@ -1,0 +1,30 @@
+{% extends "base.html"   %}
+{% block title  %}Test{% endblock %}
+{% block body %}
+<body>
+    <div id="wrapper">
+      <h1>This is the home page</h1>
+      <p>Hier stet alles was man wissen muss über dieses Projekt. Hier entsteht eine seite als digitaler Kartenordner
+      </p>
+    </div>
+    <div>
+      <ul>
+        {% for card in user.cards %}
+        <div id="card">
+        <li>{{ card.sport }}</li><br>    
+        <li>{{ card.brand }}</li><br>   
+        <li>{{ card.set }}</li><br> 
+        <li>{{ card.player }}</li><br> 
+        <li>{{ card.year }}</li><br> 
+        <li>{{ card.numbered }}</li><br> 
+        <li>{{ card.nuber }}</li><br> 
+        <li>{{ card.numberedto }}</li><br> 
+        <li>{{ card.graded }}</li><br> 
+        <li>{{ card.gradedy }}</li><br>
+        <li>{{ card.grade }}</li><br>   
+        </div>    
+        {% endfor %}
+      </ul>
+    </div>
+</body>
+{% endblock %}

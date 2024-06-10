@@ -1,0 +1,24 @@
+body{
+    background-color: grey;
+}
+
+.accounts{
+    border-style: groove;
+    position: relative;
+    width: 400px;
+    height: 500px;
+    border: 3px solid #73AD21;
+    display: flex;
+}
+
+#card{
+
+    border-style: solid;
+    border-radius: 10px;
+    border-color: aquamarine;
+    padding: auto;
+    background-color: yellow;
+    margin: 400px,100px,100px,100px;
+
+
+}
