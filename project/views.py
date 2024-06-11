@@ -33,4 +33,12 @@ def add_card():
 
         return render_template('index.html', user=current_user)
 
+@views.route('/edit_card/{id}', methods=['POST'])
+@login_required
+def edit_card(id):
+    
+    
+     
+
+
     return render_template('add_card.html', user=current_user)
