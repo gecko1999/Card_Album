@@ -33,12 +33,24 @@ def add_card():
 
         return render_template('index.html', user=current_user)
 
+    return render_template('add_card.html', user=current_user)
+
 @views.route('/edit_card/{id}', methods=['POST'])
 @login_required
 def edit_card(id):
     
+    sport = request.form.get('sport')
+    brand = request.form.get('brand')
+    set = request.form.get('set')
+    player = request.form.get('player')
+    year = request.form.get('year')
+    numbered = request.form.get('numbered')
+    number = request.form.get('number')
+    numberedto = request.form.get('numberedto')
+    graded = request.form.get('graded')   
+    gradedby = request.form.get('gradedby')
+    grade = request.form.get('grade')
+
     
-     
 
-
-    return render_template('add_card.html', user=current_user)
+    return render_template('edit_card.html')
