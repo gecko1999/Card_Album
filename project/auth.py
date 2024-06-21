@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, redirect, request
+from flask import Blueprint, render_template, url_for, redirect, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -38,20 +38,22 @@ def register():
 
 @auth.route('/register', methods=['POST'])
 def register_post():
-    email = request.form.get('email')
-    username = request.form.get('username')
-    password = request.form.get('password')
+    email = request.json.get('email')
+    username = request.json.get('username')
+    password = request.json.get('password')
     user = User.query.filter_by(email=email).first()
 
     if user:
-        return redirect(url_for('auth.register'))
+        return (jsonify({"mesage": "user already exisists"}), 400, )
     
     new_user = User(email=email, username=username, password=generate_password_hash(password, method='scrypt'))
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    return redirect(url_for('auth.login'))
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except Exception as e:
+        return(jsonify({"message": str(e)}), 400)
+    
+    return(jsonify({"message": "User created"}), 201)
 
 
 @auth.route('/logout')

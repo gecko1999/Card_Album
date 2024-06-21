@@ -35,7 +35,7 @@ def add_card():
 
     return render_template('add_card.html', user=current_user)
 
-@views.route('/edit_card/{id}', methods=['POST'])
+@views.route('/edit_card/<int:id>', methods=['POST'])
 @login_required
 def edit_card(id):
     
@@ -51,6 +51,7 @@ def edit_card(id):
     gradedby = request.form.get('gradedby')
     grade = request.form.get('grade')
 
+    card = Card.query.filter_by(id=id).first
     
 
     return render_template('edit_card.html')
