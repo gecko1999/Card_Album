@@ -1,10 +1,15 @@
-from . import db
-from flask_login import  UserMixin
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
+from uuid import uuid4
 
+
+def get_uuid():
+    return uuid4().hex
+
+db = SQLAlchemy()
 
 class Card(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(32), primary_key=True)
     sport = db.Column(db.String)
     brand = db.Column(db.String)
     set = db.Column(db.String)
@@ -20,8 +25,8 @@ class Card(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
-class User(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key=True)
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True, default=get_uuid)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     username = db.Column(db.String(1000))
