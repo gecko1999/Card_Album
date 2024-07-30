@@ -2,11 +2,19 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 from uuid import uuid4
 
+db = SQLAlchemy()
 
 def get_uuid():
     return uuid4().hex
 
-db = SQLAlchemy()
+
+class User(db.Model):
+    id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    username = db.Column(db.String(1000))
+    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    cards = db.relationship('Card')
 
 class Card(db.Model):
     id = db.Column(db.String(32), primary_key=True)
@@ -24,12 +32,4 @@ class Card(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True, unique=True, default=get_uuid)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    username = db.Column(db.String(1000))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
-    cards = db.relationship('Card')
 

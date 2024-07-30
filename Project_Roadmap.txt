@@ -2,7 +2,9 @@ Started all over with this tut:
 
 https://www.youtube.com/watch?v=sBw0O5YTT4Q&t=1372s
 
-not done yet only the flask part
+bei min 45 stehen geblieben
+
+login works completly 
 
 
 Front End: 
@@ -31,5 +33,4 @@ Database:
     Numbered, Number, NumberOf, Graded, Gradindedby, Grade, Picture
     
 
-Not tested if the changes worked not integrated front end yet 
 

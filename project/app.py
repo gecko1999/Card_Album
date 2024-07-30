@@ -2,22 +2,25 @@ from flask import Flask, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import AplicationConfig
 from flask_session import Session
+from flask_cors import CORS, cross_origin
 from models import db, User, Card
 
 app = Flask(__name__)
 app.config.from_object(AplicationConfig)
 
+cors = CORS(app, supports_credentials=True)
 server_session = Session(app)
 db.init_app(app)
 
 with app.app_context():
-    db.create_all
+    db.create_all()
+
 
 @app.route('/register', methods=['POST'])
 def register_post():
     email = request.json['email']
     username = request.json['username']
-    password = request.json.get['password']
+    password = request.json['password']
     user = User.query.filter_by(email=email).first()
 
     if user:
@@ -31,7 +34,6 @@ def register_post():
         return(jsonify({"message": str(e)}), 400)
     
     return(jsonify({"message": "User created"}), 201)
-
 
 @app.route('/login', methods=['POST'])
 def login_post():
@@ -47,9 +49,9 @@ def login_post():
                 "id": user.id,
                 "username": user.username})
         else:
-            return jsonify({"message": "no matching email or password"})
+            return jsonify({"error": "Unauthorized"}), 401
     else:
-        return jsonify({"message": "no matching email or password"})
+        return jsonify({"error": "Unauthorized"}), 401
 
 @app.route("/@me")
 def get_current_user():
@@ -63,7 +65,6 @@ def get_current_user():
         "id": user.id,
         "username": user.username
     })
-
 
 @app.route('/add_card', methods=['GET', 'POST'])
 def add_card():
@@ -82,7 +83,7 @@ def add_card():
 
         new_card = Card(sport=sport, brand=brand, set=set, player=player,
                        year=year, numbered=numbered, number=number, numberedto=numberof,
-                         graded=graded, gradedby=gradedby, grade=grade, user_id=current_user.id)
+                         graded=graded, gradedby=gradedby, grade=grade, user_id=session.get("user_id"))
         db.session.add(new_card)
         db.session.commit()
 
