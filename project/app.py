@@ -24,7 +24,7 @@ def register_post():
     user = User.query.filter_by(email=email).first()
 
     if user:
-        return (jsonify({"mesage": "user already exisists"}), 400, )
+        return (jsonify({"mesage": "user already exisists"}), 400)
     
     new_user = User(email=email, username=username, password=generate_password_hash(password, method='scrypt'))
     try:
@@ -46,13 +46,19 @@ def login_post():
         if check_password_hash(user.password, password):
             session["user_id"] = user.id
             return jsonify({
-                "id": user.id,
-                "username": user.username})
+                "message": "Login sucessful"
+                }),200
         else:
             return jsonify({"error": "Unauthorized"}), 401
     else:
         return jsonify({"error": "Unauthorized"}), 401
+    
+@app.route('/logout', methods=["POST"])
+def logout_user():
+    session.pop("user_id")
+    return jsonify({"message": "Logout successful"}), 200
 
+@cross_origin
 @app.route("/@me")
 def get_current_user():
     user_id = session.get("user_id")
@@ -60,7 +66,7 @@ def get_current_user():
     if not user_id:
         return jsonify({"message": "Unauthorized"}), 401
 
-    user = User.query.filter.by(id=user_id).first()
+    user = User.query.filter_by(id=user_id).first()
     return jsonify({
         "id": user.id,
         "username": user.username

@@ -9,11 +9,11 @@ const Login = () => {
     console.log(username, password);
 
     try {
-      const resp = await httpClient.post("http://127.0.0.1:5000/login", {
+      const resp = await httpClient.post("/login", {
         username,
         password,
       });
-
+      console.log(resp.data);
       window.location.href = "/";
     } catch (error) {
       if (error.response.status === 401) {
