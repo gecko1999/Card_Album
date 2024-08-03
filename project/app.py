@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from config import AplicationConfig
+from config import ApplicationConfig
 from flask_session import Session
 from flask_cors import CORS, cross_origin
 from models import db, User, Card
 
 app = Flask(__name__)
-app.config.from_object(AplicationConfig)
+app.config.from_object(ApplicationConfig)
 
 cors = CORS(app, supports_credentials=True)
 server_session = Session(app)
@@ -72,7 +72,7 @@ def get_current_user():
         "username": user.username
     })
 
-@app.route('/add_card', methods=['GET', 'POST'])
+@app.route('/add_card', methods=['POST'])
 def add_card():
     if request.method == 'POST':
         sport = request.json('sport')

@@ -6,10 +6,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const logInUser = async () => {
-    console.log(username, password);
-
     try {
-      const resp = await httpClient.post("/login", {
+      const resp = await httpClient.post("http://127.0.0.1:5000/login", {
         username,
         password,
       });

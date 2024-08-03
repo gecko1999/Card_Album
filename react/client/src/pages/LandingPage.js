@@ -7,16 +7,19 @@ const LandingPage = () => {
   const logout = async () => {
     const resp = await httpClient.post("http://127.0.0.1:5000/logout");
     console.log(resp.data);
-    window.location.reload;
+    window.location.reload();
   };
 
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/@me");
+        const resp = await httpClient.get("http://127.0.0.1:5000/@me", {
+          withCredentials: true,
+        });
         setUser(resp.data);
+        console.log(resp.data);
       } catch (error) {
-        console.log("Not authenticated");
+        console.log("Unathorized");
       }
     })();
   }, []);
@@ -33,12 +36,15 @@ const LandingPage = () => {
         <a href="/login">
           <button>Login</button>
         </a>
-        <a href="/register">
-          <button>Register</button>
-        </a>
-        <a>
-          <button onClick={logout}>Logout</button>
-        </a>
+        {user ? (
+          <a>
+            <button onClick={logout}>Logout</button>
+          </a>
+        ) : (
+          <a href="/register">
+            <button>Register</button>
+          </a>
+        )}
       </div>
     </div>
   );
