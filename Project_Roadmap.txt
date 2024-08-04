@@ -12,7 +12,7 @@ Front End:
     Card ratio: 2/3 width/height
     Book Effekt with 3x3 Cards on one site
     Button to filter cards how you want
-
+    Color #89CFF0 and some shadings
 
 
 Backend/Api:
@@ -32,5 +32,12 @@ Database:
     Data for Cards: Link to User, Sport, Brand, Set, Player, Year, 
     Numbered, Number, NumberOf, Graded, Gradindedby, Grade, Picture
     
-
-
+{
+    "sport": "football",
+    "brand": "panini",
+    "set": "prizm",
+    "player": "burrow",
+    "year": "2012",
+    "numbered": false,
+    "graded": false
+}

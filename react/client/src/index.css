@@ -16,3 +16,18 @@ button {
   margin: 5px;
   padding: 5px;
 }
+
+.button-span {
+  background-color: #89cff0;
+  width: 20%;
+  border-radius: 5px;
+}
+
+.addCard {
+  background-color: #89cff0;
+  position: center;
+  width: 50%;
+  margin: auto;
+  padding: 10px;
+  border: 2px solid;
+}

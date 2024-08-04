@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import httpClient from "../httpClient";
 
 const AddCard = () => {
   const [sport, setSport] = useState("");
@@ -6,18 +7,41 @@ const AddCard = () => {
   const [set, setSet] = useState("");
   const [player, setPlayer] = useState("");
   const [year, setYear] = useState("");
-  const [numbered, setNumbered] = useState("");
+  const [numbered, setNumbered] = useState(false);
   const [number, setNumber] = useState("");
-  const [numberedTo, setNumberedTo] = useState("");
-  const [graded, setGraded] = useState("");
-  const [gradedBy, setGradedBy] = useState("");
+  const [numberedof, setNumberedTo] = useState("");
+  const [graded, setGraded] = useState(false);
+  const [gradedby, setGradedBy] = useState("");
   const [grade, setGrade] = useState("");
+
+  const addCard = async () => {
+    //try {
+    const resp = await httpClient.post("http://127.0.0.1:5000/add_card", {
+      sport,
+      brand,
+      set,
+      player,
+      year,
+      numbered,
+      number,
+      numberedof,
+      graded,
+      gradedby,
+      grade,
+    });
+    console.log(resp.data);
+    //} catch (error) {
+    //if (error.response.status === 401) {
+    //alert("Invalid login");
+    //}
+    //}
+  };
 
   return (
     <div>
       <h1>Add Card</h1>
       <p>Here you can add Cards to your Account</p>
-      <div>
+      <div className="addCard">
         <form>
           <label>Sport:</label>
           <br />
@@ -87,7 +111,7 @@ const AddCard = () => {
           <input
             type="number"
             name="numbered to"
-            value={numberedTo}
+            value={numberedof}
             onChange={(e) => setNumberedTo(e.target.value)}
           />
           <br />
@@ -105,7 +129,7 @@ const AddCard = () => {
           <input
             type="text"
             name="graded by"
-            value={gradedBy}
+            value={gradedby}
             onChange={(e) => setGradedBy(e.target.value)}
           />
           <br />
@@ -118,7 +142,7 @@ const AddCard = () => {
             onChange={(e) => setGrade(e.target.value)}
           />
           <br />{" "}
-          <button type="button" onClick={null}>
+          <button type="button" onClick={() => addCard()}>
             Add
           </button>
         </form>

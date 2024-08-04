@@ -3,15 +3,16 @@ import httpClient from "../httpClient";
 
 const LandingPage = () => {
   const [user, setUser] = useState(null);
+  const [cards, setCards] = useState([]);
 
   const logout = async () => {
     const resp = await httpClient.post("http://127.0.0.1:5000/logout");
     console.log(resp.data);
-    window.location.reload();
+    window.location.href = "/";
   };
 
   useEffect(() => {
-    (async () => {
+    const fetchUser = async () => {
       try {
         const resp = await httpClient.get("http://127.0.0.1:5000/@me", {
           withCredentials: true,
@@ -21,7 +22,21 @@ const LandingPage = () => {
       } catch (error) {
         console.log("Unathorized");
       }
-    })();
+    };
+
+    const fetchCards = async () => {
+      try {
+        const resp = await httpClient.post("http://127.0.0.1:5000/get_card", {
+          withCredentials: true,
+        });
+        setCards(resp.data);
+      } catch (error) {
+        console.log("Error fetching cards:", error);
+      }
+    };
+
+    fetchUser();
+    fetchCards();
   }, []);
 
   return (
@@ -34,7 +49,22 @@ const LandingPage = () => {
       ) : (
         <p>you are not logged in</p>
       )}
-
+      {user && (
+        <div>
+          <h2>Your Cards:</h2>
+          <ul>
+            {cards.length > 0 ? (
+              cards.map((card) => (
+                <li key={card.id}>
+                  {card.player} - {card.brand} {card.set} ({card.year})
+                </li>
+              ))
+            ) : (
+              <p>No cards found</p>
+            )}
+          </ul>
+        </div>
+      )}
       {user ? (
         <div className="button-span">
           <a href="/logout">

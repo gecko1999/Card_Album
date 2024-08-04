@@ -8,7 +8,7 @@ from models import db, User, Card
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
 
-cors = CORS(app, supports_credentials=True)
+cors = CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 server_session = Session(app)
 db.init_app(app)
 
@@ -75,24 +75,65 @@ def get_current_user():
 @app.route('/add_card', methods=['POST'])
 def add_card():
     if request.method == 'POST':
-        sport = request.json('sport')
-        brand = request.json('brand')
-        set = request.json('set')
-        player = request.json('player')
-        year = request.json('year')
-        numbered = bool(request.json('numbered'))
-        number = request.json('number')
-        numberof = request.json('numberof')
-        graded = bool(request.json('graded'))
-        gradedby = request.json('gradedby')
-        grade = request.json('grad')
+        sport = request.json.get('sport')
+        brand = request.json.get('brand')
+        set = request.json.get('set')
+        player = request.json.get('player')
+        year = request.json.get('year')
+        numbered = bool(request.json.get('numbered'))
+        number = request.json.get('number')
+        numberof = request.json.get('numberof')
+        graded = bool(request.json.get('graded'))
+        gradedby = request.json.get('gradedby')
+        grade = request.json.get('grad')
+
+        user_id = session.get("user_id")
+
+        if not user_id:
+            return jsonify({"message": "Unauthorized"}), 401
 
         new_card = Card(sport=sport, brand=brand, set=set, player=player,
                        year=year, numbered=numbered, number=number, numberedto=numberof,
-                         graded=graded, gradedby=gradedby, grade=grade, user_id=session.get("user_id"))
-        db.session.add(new_card)
-        db.session.commit()
+                         graded=graded, gradedby=gradedby, grade=grade, user_id=user_id)
+        
+        try:
+            db.session.add(new_card)
+            db.session.commit()
+            return jsonify({"message": "added succesfully"}, 200)
+        except Exception as e:
+            return(jsonify({"message": str(e)}), 400)
 
+@app.route('/get_card', methods=['POST'])
+def get_card():
+    if request.method == 'POST':
+        user_id = session.get("user_id")
+
+        if not user_id:
+            return jsonify({"message": "Unauthorized"}), 401
+        
+        cards = Card.query.filter_by(user_id=user_id).all()
+
+        if not cards:
+            return jsonify({"message": "No Card found"}), 404
+        
+        cards_list = []
+        for card in cards:
+            cards_list.append({
+                "id": card.id,
+                "sport": card.sport,
+                "brand": card.brand,
+                "set": card.set,
+                "player": card.player,
+                "year": card.year,
+                "numbered": card.numbered,
+                "number": card.number,
+                "numberedto": card.numberedto,
+                "graded": card.graded,
+                "gradedby": card.gradedby,
+                "grade": card.grade
+            })
+
+        return jsonify(cards_list), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

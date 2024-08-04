@@ -17,7 +17,7 @@ class User(db.Model):
     cards = db.relationship('Card')
 
 class Card(db.Model):
-    id = db.Column(db.String(32), primary_key=True)
+    id = db.Column(db.String(32), primary_key=True, unique=True, default=get_uuid)
     sport = db.Column(db.String)
     brand = db.Column(db.String)
     set = db.Column(db.String)
