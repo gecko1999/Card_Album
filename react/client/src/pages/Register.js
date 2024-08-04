@@ -15,6 +15,7 @@ const Register = () => {
         password,
       });
       console.log(resp.data);
+      window.location.href = "/";
     } catch (error) {
       if (error.response.status === 400) {
         alert("User already exists");

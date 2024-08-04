@@ -29,7 +29,7 @@ Backend/Api:
 Database:
     Languages: SQLAlchemy
     Data for Profiles: Username, Email, Password
-    Data for Cards: Link to User, Sport, Brand, Set, Player, Year, 
+    Data for Cards: Link to User, Sport, Brand, Set, Player, Team, Year, 
     Numbered, Number, NumberOf, Graded, Gradindedby, Grade, Picture
     
 {

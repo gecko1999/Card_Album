@@ -79,6 +79,7 @@ def add_card():
         brand = request.json.get('brand')
         set = request.json.get('set')
         player = request.json.get('player')
+        team = request.json.get('team')
         year = request.json.get('year')
         numbered = bool(request.json.get('numbered'))
         number = request.json.get('number')
@@ -86,13 +87,12 @@ def add_card():
         graded = bool(request.json.get('graded'))
         gradedby = request.json.get('gradedby')
         grade = request.json.get('grad')
-
         user_id = session.get("user_id")
 
         if not user_id:
             return jsonify({"message": "Unauthorized"}), 401
 
-        new_card = Card(sport=sport, brand=brand, set=set, player=player,
+        new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
                        year=year, numbered=numbered, number=number, numberedto=numberof,
                          graded=graded, gradedby=gradedby, grade=grade, user_id=user_id)
         
@@ -124,16 +124,19 @@ def get_card():
                 "brand": card.brand,
                 "set": card.set,
                 "player": card.player,
+                "team": card.team,
                 "year": card.year,
                 "numbered": card.numbered,
                 "number": card.number,
                 "numberedto": card.numberedto,
                 "graded": card.graded,
                 "gradedby": card.gradedby,
-                "grade": card.grade
+                "grade": card.grade,
+                "linktopic": card.linktopic
             })
 
         return jsonify(cards_list), 200
+
 
 if __name__ == "__main__":
     app.run(debug=True)

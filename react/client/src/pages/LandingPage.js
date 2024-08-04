@@ -56,7 +56,15 @@ const LandingPage = () => {
             {cards.length > 0 ? (
               cards.map((card) => (
                 <li key={card.id}>
+                  <img
+                    src={require("./images/picnotfound.jpg")}
+                    alt="card"
+                    height={350}
+                    width={250}
+                  />
+                  <br />
                   {card.player} - {card.brand} {card.set} ({card.year})
+                  <button onClick={null}>Edit</button>
                 </li>
               ))
             ) : (

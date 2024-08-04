@@ -6,35 +6,37 @@ const AddCard = () => {
   const [brand, setBrand] = useState("");
   const [set, setSet] = useState("");
   const [player, setPlayer] = useState("");
+  const [team, setTeam] = useState("");
   const [year, setYear] = useState("");
   const [numbered, setNumbered] = useState(false);
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState(0);
   const [numberedof, setNumberedTo] = useState("");
   const [graded, setGraded] = useState(false);
   const [gradedby, setGradedBy] = useState("");
-  const [grade, setGrade] = useState("");
+  const [grade, setGrade] = useState(0);
 
   const addCard = async () => {
-    //try {
-    const resp = await httpClient.post("http://127.0.0.1:5000/add_card", {
-      sport,
-      brand,
-      set,
-      player,
-      year,
-      numbered,
-      number,
-      numberedof,
-      graded,
-      gradedby,
-      grade,
-    });
-    console.log(resp.data);
-    //} catch (error) {
-    //if (error.response.status === 401) {
-    //alert("Invalid login");
-    //}
-    //}
+    try {
+      const resp = await httpClient.post("http://127.0.0.1:5000/add_card", {
+        sport,
+        brand,
+        set,
+        player,
+        year,
+        numbered,
+        number,
+        numberedof,
+        graded,
+        gradedby,
+        grade,
+      });
+      console.log(resp.data);
+      window.location.href = "/";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("Error adding Card");
+      }
+    }
   };
 
   return (
@@ -79,6 +81,15 @@ const AddCard = () => {
             onChange={(e) => setPlayer(e.target.value)}
           />
           <br />
+          <label>Team</label>
+          <br />
+          <input
+            type="text"
+            name="team"
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
+          />
+          <br />
           <label>Year</label>
           <br />
           <input
@@ -97,23 +108,27 @@ const AddCard = () => {
             onChange={(e) => setNumbered(e.target.value)}
           />
           <br />
-          <label>Number</label>
-          <br />
-          <input
-            type="number"
-            name="number"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-          />
-          <br />
-          <label>Numbered to</label>
-          <br />
-          <input
-            type="number"
-            name="numbered to"
-            value={numberedof}
-            onChange={(e) => setNumberedTo(e.target.value)}
-          />
+          {numbered && (
+            <div>
+              <label>Number</label>
+              <br />
+              <input
+                type="number"
+                name="number"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+              />
+              <br />
+              <label>Numbered to</label>
+              <br />
+              <input
+                type="number"
+                name="numbered to"
+                value={numberedof}
+                onChange={(e) => setNumberedTo(e.target.value)}
+              />{" "}
+            </div>
+          )}
           <br />
           <label>Graded</label>
           <br />
@@ -124,24 +139,28 @@ const AddCard = () => {
             onChange={(e) => setGraded(e.target.value)}
           />
           <br />
-          <label>Grading Company</label>
+          {graded && (
+            <div>
+              <label>Grading Company</label>
+              <br />
+              <input
+                type="text"
+                name="graded by"
+                value={gradedby}
+                onChange={(e) => setGradedBy(e.target.value)}
+              />
+              <br />
+              <label>Grade</label>
+              <br />
+              <input
+                type="number"
+                name="grade"
+                value={grade}
+                onChange={(e) => setGrade(e.target.value)}
+              />
+            </div>
+          )}
           <br />
-          <input
-            type="text"
-            name="graded by"
-            value={gradedby}
-            onChange={(e) => setGradedBy(e.target.value)}
-          />
-          <br />
-          <label>Grade</label>
-          <br />
-          <input
-            type="number"
-            name="grade"
-            value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-          />
-          <br />{" "}
           <button type="button" onClick={() => addCard()}>
             Add
           </button>

@@ -31,3 +31,7 @@ button {
   padding: 10px;
   border: 2px solid;
 }
+
+ul {
+  list-style-type: none;
+}
