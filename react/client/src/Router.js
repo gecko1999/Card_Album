@@ -4,6 +4,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import React from "react";
+import AddCard from "./pages/AddCard";
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
         <Route component={NotFound} />
         <Route path="login" exact Component={Login} />
         <Route path="register" exact Component={Register} />
+        <Route path="addCard" exact Component={AddCard} />
       </Routes>
     </BrowserRouter>
   );

@@ -25,24 +25,20 @@ const Login = () => {
       <h1>Login Page</h1>
       <p>Please fill out the Form to Login to your account</p>
       <form>
-        <label>
-          Username:
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            name="username"
-          />
-        </label>
-        <label>
-          password:
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-          />
-        </label>
+        <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+        />
+        <label>password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+        />
         <button type="button" onClick={() => logInUser()}>
           Submit
         </button>

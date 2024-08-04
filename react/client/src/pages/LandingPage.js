@@ -28,24 +28,32 @@ const LandingPage = () => {
     <div>
       <h1>This is Starting Page</h1>
       {user ? (
-        <p>You are loged in {user.username}</p>
+        <div>
+          <p>You are loged in {user.username}</p>
+        </div>
       ) : (
         <p>you are not logged in</p>
       )}
-      <div className="button-span">
-        <a href="/login">
-          <button>Login</button>
-        </a>
-        {user ? (
-          <a>
+
+      {user ? (
+        <div className="button-span">
+          <a href="/logout">
             <button onClick={logout}>Logout</button>
           </a>
-        ) : (
+          <a href="addCard">
+            <button>Add Card</button>
+          </a>
+        </div>
+      ) : (
+        <div className="button-span">
+          <a href="/login">
+            <button>Login</button>
+          </a>
           <a href="/register">
             <button>Register</button>
           </a>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
