@@ -14,6 +14,7 @@ const AddCard = () => {
   const [graded, setGraded] = useState(false);
   const [gradedby, setGradedBy] = useState("");
   const [grade, setGrade] = useState(0);
+  const [image, setImage] = useState("");
 
   const addCard = async () => {
     try {
@@ -29,6 +30,7 @@ const AddCard = () => {
         graded,
         gradedby,
         grade,
+        image,
       });
       console.log(resp.data);
       window.location.href = "/";
@@ -160,6 +162,12 @@ const AddCard = () => {
               />
             </div>
           )}
+          <input
+            type="file"
+            name="file"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
           <br />
           <button type="button" onClick={() => addCard()}>
             Add

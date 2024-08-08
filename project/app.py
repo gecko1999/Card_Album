@@ -87,10 +87,13 @@ def add_card():
         graded = bool(request.json.get('graded'))
         gradedby = request.json.get('gradedby')
         grade = request.json.get('grad')
+        image = request.files('image')
         user_id = session.get("user_id")
 
         if not user_id:
             return jsonify({"message": "Unauthorized"}), 401
+
+        image.save('static/picture', "test.jpg")
 
         new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
                        year=year, numbered=numbered, number=number, numberedto=numberof,

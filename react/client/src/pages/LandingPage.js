@@ -30,6 +30,7 @@ const LandingPage = () => {
           withCredentials: true,
         });
         setCards(resp.data);
+        console.log(resp.data);
       } catch (error) {
         console.log("Error fetching cards:", error);
       }
@@ -57,13 +58,14 @@ const LandingPage = () => {
               cards.map((card) => (
                 <li key={card.id}>
                   <img
-                    src={require("./images/picnotfound.jpg")}
+                    src={require("./" + card.linktopic)}
                     alt="card"
                     height={350}
                     width={250}
                   />
                   <br />
                   {card.player} - {card.brand} {card.set} ({card.year})
+                  {console.log(card.linktopic)}
                   <button onClick={null}>Edit</button>
                 </li>
               ))
