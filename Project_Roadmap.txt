@@ -25,6 +25,9 @@ Backend/Api:
     Filter for specific Cards
 
 
+    add Picture working default not working 
+    and naming not working
+
 
 Database:
     Languages: SQLAlchemy

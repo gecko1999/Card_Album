@@ -18,20 +18,31 @@ const AddCard = () => {
 
   const addCard = async () => {
     try {
-      const resp = await httpClient.post("http://127.0.0.1:5000/add_card", {
-        sport,
-        brand,
-        set,
-        player,
-        year,
-        numbered,
-        number,
-        numberedof,
-        graded,
-        gradedby,
-        grade,
-        image,
-      });
+      const formData = new FormData();
+      formData.append("sport", sport);
+      formData.append("brand", brand);
+      formData.append("set", set);
+      formData.append("player", player);
+      formData.append("team", team);
+      formData.append("year", year);
+      formData.append("numbered", numbered);
+      formData.append("number", number);
+      formData.append("numberof", numberedof);
+      formData.append("graded", graded);
+      formData.append("gradedby", gradedby);
+      formData.append("grade", grade);
+      formData.append("image", image);
+
+      const resp = await httpClient.post(
+        "http://127.0.0.1:5000/add_card",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       console.log(resp.data);
       window.location.href = "/";
     } catch (error) {
@@ -165,8 +176,7 @@ const AddCard = () => {
           <input
             type="file"
             name="file"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
           />
           <br />
           <button type="button" onClick={() => addCard()}>

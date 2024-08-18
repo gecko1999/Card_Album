@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 from config import ApplicationConfig
 from flask_session import Session
 from flask_cors import CORS, cross_origin
 from models import db, User, Card
+import os
 
 app = Flask(__name__)
 app.config.from_object(ApplicationConfig)
@@ -12,9 +14,15 @@ cors = CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 server_session = Session(app)
 db.init_app(app)
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+
+
+
 with app.app_context():
     db.create_all()
 
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/register', methods=['POST'])
 def register_post():
@@ -72,32 +80,50 @@ def get_current_user():
         "username": user.username
     })
 
+
 @app.route('/add_card', methods=['POST'])
 def add_card():
+    counter = 0
     if request.method == 'POST':
-        sport = request.json.get('sport')
-        brand = request.json.get('brand')
-        set = request.json.get('set')
-        player = request.json.get('player')
-        team = request.json.get('team')
-        year = request.json.get('year')
-        numbered = bool(request.json.get('numbered'))
-        number = request.json.get('number')
-        numberof = request.json.get('numberof')
-        graded = bool(request.json.get('graded'))
-        gradedby = request.json.get('gradedby')
-        grade = request.json.get('grad')
-        image = request.files('image')
+        sport = request.form.get('sport')
+        brand = request.form.get('brand')
+        set = request.form.get('set')
+        player = request.form.get('player')
+        team = request.form.get('team')
+        year = request.form.get('year')
+        numbered = bool(request.form.get('numbered'))
+        number = request.form.get('number')
+        numberof = request.form.get('numberof')
+        graded = bool(request.form.get('graded'))
+        gradedby = request.form.get('gradedby')
+        grade = request.form.get('grad')
+        image = request.files.get('image')
         user_id = session.get("user_id")
 
         if not user_id:
             return jsonify({"message": "Unauthorized"}), 401
 
-        image.save('static/picture', "test.jpg")
+        user = User.query.filter_by(id=user_id).first()
+        username = user.username
+        path= 'F:/Dokumente/Football Karten Projekt/react/client/src/pages/images'
+
+        full_path = os.path.join(path, username)
+
+        if not os.path.exists(full_path):
+            os.chdir(path)
+            os.mkdir(username)
+
+        if image and allowed_file(image.filename):
+            counter= counter + 1
+            filename = user_id + str(counter) + ".jpg"
+            savename=os.path.join(full_path, filename)
+            image.save(savename)
+            link="images/" + user.username + "/" + filename 
+            print(link)
 
         new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
                        year=year, numbered=numbered, number=number, numberedto=numberof,
-                         graded=graded, gradedby=gradedby, grade=grade, user_id=user_id)
+                         graded=graded, gradedby=gradedby, grade=grade, user_id=user_id, linktopic=link)
         
         try:
             db.session.add(new_card)
@@ -118,7 +144,7 @@ def get_card():
 
         if not cards:
             return jsonify({"message": "No Card found"}), 404
-        
+
         cards_list = []
         for card in cards:
             cards_list.append({
