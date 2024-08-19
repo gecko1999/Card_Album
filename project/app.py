@@ -124,10 +124,14 @@ def add_card():
             link="images/" + user.username + "/" + filename 
             print(link)
 
-        new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
-                       year=year, numbered=numbered, number=number, numberedto=numberof,
-                         graded=graded, gradedby=gradedby, grade=grade, user_id=user_id, linktopic=link)
-        
+            new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
+                           year=year, numbered=numbered, number=number, numberedto=numberof,
+                             graded=graded, gradedby=gradedby, grade=grade, user_id=user_id, linktopic=link)
+        else:
+            new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
+                           year=year, numbered=numbered, number=number, numberedto=numberof,
+                             graded=graded, gradedby=gradedby, grade=grade, user_id=user_id)
+            
         try:
             db.session.add(new_card)
             db.session.commit()
