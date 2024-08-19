@@ -26,7 +26,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_uuid():
-    return uuid4.hex()
+    return uuid4().hex
 
 @app.route('/register', methods=['POST'])
 def register_post():
@@ -122,7 +122,6 @@ def add_card():
             savename=os.path.join(full_path, filename)
             image.save(savename)
             link="images/" + user.username + "/" + filename 
-            print(link)
 
             new_card = Card(sport=sport, brand=brand, set=set, player=player, team=team,
                            year=year, numbered=numbered, number=number, numberedto=numberof,
@@ -172,6 +171,25 @@ def get_card():
             })
 
         return jsonify(cards_list), 200
+
+@app.route('/delete_card', methods=['DELETE'])
+def delete_card():
+    user_id = session.get("user_id")
+
+    card_id = request.json.get('id')
+
+    if not user_id:
+        return jsonify({"message": "Unauthorized"}), 404
+    
+    card = Card.query.get(card_id)
+
+    if card:
+        try:
+            db.session.delete(card)
+            db.session.commit()
+            return jsonify({"message": "deleted succesfully"}, 200)
+        except Exception as e:
+            return(jsonify({"message": str(e)}), 400)
 
 
 if __name__ == "__main__":

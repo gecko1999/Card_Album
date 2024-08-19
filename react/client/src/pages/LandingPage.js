@@ -11,6 +11,23 @@ const LandingPage = () => {
     window.location.href = "/";
   };
 
+  const deleteCard = async (cardId) => {
+    try {
+      const resp = await httpClient.delete(
+        "http://127.0.0.1:5000/delete_card",
+        {
+          data: { id: cardId },
+          withCredentials: true,
+        }
+      );
+      console.log(resp.data);
+
+      setCards(cards.filter((card) => card.id !== cardId));
+    } catch (error) {
+      console.log("Error deleting card:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -67,6 +84,7 @@ const LandingPage = () => {
                   {card.player} - {card.brand} {card.set} ({card.year})
                   {console.log(card.linktopic)}
                   <button onClick={null}>Edit</button>
+                  <button onClick={() => deleteCard(card.id)}>Delete</button>
                 </li>
               ))
             ) : (

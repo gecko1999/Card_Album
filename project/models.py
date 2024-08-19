@@ -30,7 +30,7 @@ class Card(db.Model):
     graded = db.Column(db.Boolean, default = False)
     gradedby = db.Column(db.String, nullable=True)
     grade = db.Column(db.Double, nullable=True)
-    linktopic = db.Column(db.String, nullable=False, default="images/picture_not_found.jpg")
+    linktopic = db.Column(db.String, nullable=False, default="images/picnotfound.jpg")
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
