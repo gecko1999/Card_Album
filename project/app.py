@@ -5,6 +5,7 @@ from config import ApplicationConfig
 from flask_session import Session
 from flask_cors import CORS, cross_origin
 from models import db, User, Card
+from uuid import uuid4
 import os
 
 app = Flask(__name__)
@@ -23,6 +24,9 @@ with app.app_context():
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def get_uuid():
+    return uuid4.hex()
 
 @app.route('/register', methods=['POST'])
 def register_post():
@@ -114,8 +118,7 @@ def add_card():
             os.mkdir(username)
 
         if image and allowed_file(image.filename):
-            counter= counter + 1
-            filename = user_id + str(counter) + ".jpg"
+            filename = user_id + str(get_uuid()) + ".jpg"
             savename=os.path.join(full_path, filename)
             image.save(savename)
             link="images/" + user.username + "/" + filename 
