@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import httpClient from "../httpClient";
 
 const LandingPage = () => {
   const [user, setUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const navigate = useNavigate();
 
   const logout = async () => {
     const resp = await httpClient.post("http://127.0.0.1:5000/logout");
@@ -57,6 +59,11 @@ const LandingPage = () => {
     fetchCards();
   }, []);
 
+  const editCard = (cardId) => {
+    console.log(cardId);
+    navigate(`/editCard/${cardId}`);
+  };
+
   return (
     <div>
       <h1>This is Starting Page</h1>
@@ -70,7 +77,8 @@ const LandingPage = () => {
       {user && (
         <div>
           <h2>Your Cards:</h2>
-          <ul>
+
+          <ul class="grid-list">
             {cards.length > 0 ? (
               cards.map((card) => (
                 <li key={card.id}>
@@ -83,7 +91,7 @@ const LandingPage = () => {
                   <br />
                   {card.player} - {card.brand} {card.set} ({card.year})
                   {console.log(card.linktopic)}
-                  <button onClick={null}>Edit</button>
+                  <button onClick={() => editCard(card.id)}>Edit</button>
                   <button onClick={() => deleteCard(card.id)}>Delete</button>
                 </li>
               ))

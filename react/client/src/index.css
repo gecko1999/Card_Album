@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
 }
 
 code {
@@ -34,4 +35,22 @@ button {
 
 ul {
   list-style-type: none;
+}
+
+.grid-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  list-style-type: none;
+  padding: 0;
+  max-width: 300px;
+  align: center;
+}
+
+.grid-list li {
+  background-color: lightblue;
+  text-align: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }

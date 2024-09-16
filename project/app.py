@@ -172,6 +172,79 @@ def get_card():
 
         return jsonify(cards_list), 200
 
+@app.route('/update_card/<cardId>', methods=['GET', 'PUT'])
+def get_card_by(cardId):
+    
+    cardIdReact = cardId
+
+    if request.method == 'GET':
+        
+        user_id = session.get("user_id")
+        if not user_id:
+            return jsonify({"message": "Unauthorized"}), 404
+
+        card = Card.query.get(cardIdReact)
+        print(cardIdReact)
+
+        if not card:
+            return jsonify({"message": "Card not exists"}), 401
+
+        return jsonify({"id": card.id,
+                "sport": card.sport,
+                "brand": card.brand,
+                "set": card.set,
+                "player": card.player,
+                "team": card.team,
+                "year": card.year,
+                "numbered": card.numbered,
+                "number": card.number,
+                "numberedto": card.numberedto,
+                "graded": card.graded,
+                "gradedby": card.gradedby,
+                "grade": card.grade,
+                "linktopic": card.linktopic})
+    
+    if request.method == 'PUT':
+        
+        data = request.json
+
+        user_id = session.get("user_id")
+        if not user_id:
+            return jsonify({"message": "Unauthorized"}), 404
+
+
+        card = Card.query.get(cardIdReact)
+        print(cardIdReact)
+        print(card)
+        if not card:
+            return jsonify({"message": "Card not exists"}), 404
+        
+        image = request.files.get('image')
+        user_id = session.get("user_id")
+        
+
+        card.sport = data.get('sport', card.sport)
+        card.brand = data.get('brand', card.brand)
+        card.set = data.get('set', card.set)
+        card.player = data.get('player', card.set)
+        card.team = data.get('team', card.team)
+        card.year = data.get('year', card.year)
+        card.numbered = data.get(bool('numbered'), card.numbered)
+        card.number = data.get('number', card.number) 
+        card.numberedto = data.get('numberof', card.numberedto) 
+        card.graded = data.get(bool('graded'), card.graded)
+        card.gradedby = data.get('gradedby', card.gradedby) 
+        card.grade = data.get('grade', card.grade)
+        card.image = image 
+        card.user_id = user_id 
+
+        db.session.commit()
+
+        return jsonify({"message": "change sucessfully"}), 200
+
+
+
+
 @app.route('/delete_card', methods=['DELETE'])
 def delete_card():
     user_id = session.get("user_id")

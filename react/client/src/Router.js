@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import React from "react";
 import AddCard from "./pages/AddCard";
+import EditCard from "./pages/EditCard";
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path="login" exact Component={Login} />
         <Route path="register" exact Component={Register} />
         <Route path="addCard" exact Component={AddCard} />
+        <Route path="/editCard/:cardId" element={<EditCard />} />
       </Routes>
     </BrowserRouter>
   );
