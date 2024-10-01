@@ -75,7 +75,7 @@ const LandingPage = () => {
         <p>you are not logged in</p>
       )}
       {user && (
-        <div>
+        <div className="book">
           <h2>Your Cards:</h2>
 
           <ul class="grid-list">

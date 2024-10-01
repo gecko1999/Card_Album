@@ -64,147 +64,162 @@ const EditCard = () => {
   };
 
   return (
-    <div>
-      <h1>Edit Card</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Sport:</label>
-          <input
-            type="text"
-            name="sport"
-            value={cardData.sport}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+    <div className="background">
+      <div className="editCard">
+        <h1>Edit Card</h1>
+        <form onSubmit={handleSubmit} className="editForm">
+          <div>
+            <label>Sport:</label>
+            <br />
+            <input
+              type="text"
+              name="sport"
+              value={cardData.sport}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Brand:</label>
-          <input
-            type="text"
-            name="brand"
-            value={cardData.brand}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div>
+            <label>Brand:</label>
+            <br />
+            <input
+              type="text"
+              name="brand"
+              value={cardData.brand}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Set:</label>
-          <input
-            type="text"
-            name="set"
-            value={cardData.set}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div>
+            <label>Set:</label>
+            <br />
+            <input
+              type="text"
+              name="set"
+              value={cardData.set}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Player:</label>
-          <input
-            type="text"
-            name="player"
-            value={cardData.player}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div>
+            <label>Player:</label>
+            <br />
+            <input
+              type="text"
+              name="player"
+              value={cardData.player}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Team:</label>
-          <input
-            type="text"
-            name="team"
-            value={cardData.team}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div>
+            <label>Team:</label>
+            <br />
+            <input
+              type="text"
+              name="team"
+              value={cardData.team}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Year:</label>
-          <input
-            type="number"
-            name="year"
-            value={cardData.year}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div>
+            <label>Year:</label>
+            <br />
+            <input
+              type="number"
+              name="year"
+              value={cardData.year}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Numbered:</label>
-          <input
-            type="checkbox"
-            name="numbered"
-            value={cardData.numbered}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Numbered:</label>
+            <br />
+            <input
+              type="checkbox"
+              name="numbered"
+              value={cardData.numbered}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Number:</label>
-          <input
-            type="number"
-            name="number"
-            value={cardData.number}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Number:</label>
+            <br />
+            <input
+              type="number"
+              name="number"
+              value={cardData.number}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Numbered to:</label>
-          <input
-            type="number"
-            name="numberedof"
-            value={cardData.numberof}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Numbered to:</label>
+            <br />
+            <input
+              type="number"
+              name="numberedof"
+              value={cardData.numberof}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Graded:</label>
-          <input
-            type="checkbox"
-            name="graded"
-            value={cardData.graded}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Graded:</label>
+            <br />
+            <input
+              type="checkbox"
+              name="graded"
+              value={cardData.graded}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Grading Company:</label>
-          <input
-            type="text"
-            name="gradedby"
-            value={cardData.gradedby}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Grading Company:</label>
+            <br />
+            <input
+              type="text"
+              name="gradedby"
+              value={cardData.gradedby}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Grade:</label>
-          <input
-            type="number"
-            name="grade"
-            value={cardData.grade}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Grade:</label>
+            <br />
+            <input
+              type="number"
+              name="grade"
+              value={cardData.grade}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <div>
-          <label>Image Path (linktopic):</label>
-          <input
-            type="text"
-            name="linktopic"
-            value={cardData.linktopic}
-            onChange={handleInputChange}
-          />
-        </div>
+          <div>
+            <label>Image Path (linktopic):</label>
+            <br />
+            <input
+              type="text"
+              name="linktopic"
+              value={cardData.linktopic}
+              onChange={handleInputChange}
+            />
+          </div>
 
-        <button type="submit">Save Changes</button>
-      </form>
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
     </div>
   );
 };
