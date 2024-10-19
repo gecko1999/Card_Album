@@ -5,6 +5,8 @@ import httpClient from "../httpClient";
 const LandingPage = () => {
   const [user, setUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9;
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -64,6 +66,22 @@ const LandingPage = () => {
     navigate(`/editCard/${cardId}`);
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(cards.length / itemsPerPage)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <div>
       <h1>This is Starting Page</h1>
@@ -79,8 +97,8 @@ const LandingPage = () => {
           <h2>Your Cards:</h2>
 
           <ul class="grid-list">
-            {cards.length > 0 ? (
-              cards.map((card) => (
+            {currentCards.length > 0 ? (
+              currentCards.map((card) => (
                 <li key={card.id}>
                   <img
                     src={require("./" + card.linktopic)}
@@ -99,6 +117,17 @@ const LandingPage = () => {
               <p>No cards found</p>
             )}
           </ul>
+          <div>
+            <button onClick={prevPage} disabled={currentPage === 1}>
+              Previous
+            </button>
+            <button
+              onClick={nextPage}
+              disabled={currentPage === Math.ceil(cards.length / itemsPerPage)}
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
       {user ? (
