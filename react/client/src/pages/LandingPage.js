@@ -6,6 +6,8 @@ const LandingPage = () => {
   const [user, setUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   const itemsPerPage = 9;
   const navigate = useNavigate();
 
@@ -32,6 +34,25 @@ const LandingPage = () => {
     }
   };
 
+  const fetchCards = async () => {
+    try {
+      const resp = await httpClient.post(
+        "http://127.0.0.1:5000/get_card",
+        {
+          filter_field: filterField,
+          filter_value: filterValue,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      setCards(resp.data);
+      console.log(resp.data);
+    } catch (error) {
+      console.log("Error fetching cards:", error);
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -42,18 +63,6 @@ const LandingPage = () => {
         console.log(resp.data);
       } catch (error) {
         console.log("Unathorized");
-      }
-    };
-
-    const fetchCards = async () => {
-      try {
-        const resp = await httpClient.post("http://127.0.0.1:5000/get_card", {
-          withCredentials: true,
-        });
-        setCards(resp.data);
-        console.log(resp.data);
-      } catch (error) {
-        console.log("Error fetching cards:", error);
       }
     };
 
@@ -95,7 +104,27 @@ const LandingPage = () => {
       {user && (
         <div className="book">
           <h2>Your Cards:</h2>
-
+          <div>
+            <select
+              value={filterField}
+              onChange={(e) => setFilterField(e.target.value)}
+            >
+              <option value={""}>Select Filter Field</option>
+              <option value={"sport"}>Sport</option>
+              <option value={"brand"}>Brand</option>
+              <option value={"player"}>Player</option>
+              <option value={"set"}>Set</option>
+              <option value={"year"}>Year</option>
+              <option value={"graded"}>Graded</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Enter filter value"
+              value={filterValue}
+              onChange={(e) => setFilterValue(e.target.value)}
+            />
+            <button onClick={fetchCards}>Apply Filter</button>
+          </div>
           <ul class="grid-list">
             {currentCards.length > 0 ? (
               currentCards.map((card) => (

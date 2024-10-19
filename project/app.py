@@ -146,7 +146,15 @@ def get_card():
         if not user_id:
             return jsonify({"message": "Unauthorized"}), 401
         
-        cards = Card.query.filter_by(user_id=user_id).all()
+        filter_field = request.json.get('filter_field')
+        filter_value = request.json.get('filter_value')
+
+        query = Card.query.filter_by(user_id=user_id)
+
+        if filter_field and filter_value:
+            query = query.filter(getattr(Card, filter_field) == filter_value)
+
+        cards = query.all()
 
         if not cards:
             return jsonify({"message": "No Card found"}), 404
@@ -263,6 +271,24 @@ def delete_card():
             return jsonify({"message": "deleted succesfully"}, 200)
         except Exception as e:
             return(jsonify({"message": str(e)}), 400)
+
+@app.route('/get_filter', methods=['POST'])
+def get_filter():
+    
+    filter_field = request.json.get('filter_field')
+    print(filter_field)
+    user_id = session.get("user_id")
+
+    if not user_id:
+        return jsonify({"message": "Unauthoried"}), 404
+
+    distinct_values = db.session.query(getattr(Card, filter_field)).filter_by(user_id=user_id).distinct().all()
+
+    filter_list = [value[0] for value in distinct_values]
+    print(filter_list)
+    return jsonify(filter_list), 200
+
+
 
 
 if __name__ == "__main__":
