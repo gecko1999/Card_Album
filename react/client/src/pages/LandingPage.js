@@ -8,6 +8,7 @@ const LandingPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterField, setFilterField] = useState("");
   const [filterValue, setFilterValue] = useState("");
+  const [filterOptions, setFilterOptions] = useState([]);
   const itemsPerPage = 9;
   const navigate = useNavigate();
 
@@ -53,6 +54,22 @@ const LandingPage = () => {
     }
   };
 
+  const fetchFilterOptions = async (selectedField) => {
+    if (!selectedField) return;
+
+    try {
+      const resp = await httpClient.post(
+        "http://127.0.0.1:5000/get_filter",
+        { filter_field: selectedField },
+        { withCredentials: true }
+      );
+      setFilterOptions(resp.data); // Update state with the distinct values
+    } catch (error) {
+      console.log("Error fetching filter options:", error);
+      setFilterOptions([]); // Reset options on error
+    }
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -69,6 +86,12 @@ const LandingPage = () => {
     fetchUser();
     fetchCards();
   }, []);
+
+  useEffect(() => {
+    if (filterField) {
+      fetchFilterOptions(filterField);
+    }
+  }, [filterField]);
 
   const editCard = (cardId) => {
     console.log(cardId);
@@ -117,13 +140,22 @@ const LandingPage = () => {
               <option value={"year"}>Year</option>
               <option value={"graded"}>Graded</option>
             </select>
-            <input
-              type="text"
-              placeholder="Enter filter value"
-              value={filterValue}
-              onChange={(e) => setFilterValue(e.target.value)}
-            />
-            <button onClick={fetchCards}>Apply Filter</button>
+            {filterField && (
+              <select
+                value={filterValue}
+                onChange={(e) => setFilterValue(e.target.value)}
+              >
+                <option value="">Select {filterField}</option>
+                {filterOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            )}
+            {filterField && filterValue && (
+              <button onClick={fetchCards}>Apply Filter</button>
+            )}
           </div>
           <ul class="grid-list">
             {currentCards.length > 0 ? (
