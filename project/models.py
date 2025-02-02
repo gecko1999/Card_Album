@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import validates
 from sqlalchemy.sql import func
 from uuid import uuid4
 
@@ -34,4 +35,7 @@ class Card(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    @validates('sport', 'brand', 'set', 'player', 'team', 'gradedby', 'linktopic')
+    def convert_to_upper(self, key, value):
+        return value.upper() if isinstance(value, str) else value
 

@@ -231,7 +231,7 @@ def get_card_by(cardId):
         user_id = session.get("user_id")
         
 
-        card.sport = data.get('sport', card.sport)
+        card.sport = data.get('sport', card.sport).upper()
         card.brand = data.get('brand', card.brand)
         card.set = data.get('set', card.set)
         card.player = data.get('player', card.set)
