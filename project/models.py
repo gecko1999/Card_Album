@@ -35,7 +35,7 @@ class Card(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    @validates('sport', 'brand', 'set', 'player', 'team', 'gradedby', 'linktopic')
-    def convert_to_upper(self, key, value):
-        return value.upper() if isinstance(value, str) else value
+    @validates('sport', 'brand', 'set', 'player', 'team', 'gradedby')
+    def convert_to_captitalize(self, key, value):
+        return value.capitalize() if isinstance(value, str) else value
 

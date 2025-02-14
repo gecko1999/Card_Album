@@ -16,7 +16,7 @@ const LandingPage = () => {
   const logout = async () => {
     const resp = await httpClient.post("http://127.0.0.1:5000/logout");
     console.log(resp.data);
-    window.location.href = "/";
+    window.location.href = "/LandingPage";
   };
 
   const deleteCard = async (cardId) => {
@@ -103,17 +103,7 @@ const LandingPage = () => {
     setFilterApply(true);
     fetchCards();
   };
-  /*
-  const resetFilter = () => {
-    setFilterField("");
-    setFilterValue("");
-    setFilterApply(false);
 
-    // Ensure fetchCards() runs after state update
-    setTimeout(() => {
-      fetchCards();
-    }, 0);
-  };*/
   const resetFilter = async () => {
     setFilterField("");
     setFilterValue("");
