@@ -148,13 +148,14 @@ def get_card():
         
         filter_field = request.json.get('filter_field')
         filter_value = request.json.get('filter_value')
-
+    
         query = Card.query.filter_by(user_id=user_id)
 
-        if filter_field and filter_value:
+        if not filter_field or not filter_value:
+            cards = Card.query.filter_by(user_id=user_id).all()
+        else:
             query = query.filter(getattr(Card, filter_field) == filter_value)
-
-        cards = query.all()
+            cards = query.all() 
 
         if not cards:
             return jsonify({"message": "No Card found"}), 404
@@ -288,7 +289,7 @@ def get_filter():
     print(filter_list)
     return jsonify(filter_list), 200
 
-
+    
 
 
 if __name__ == "__main__":

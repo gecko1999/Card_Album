@@ -9,6 +9,7 @@ const LandingPage = () => {
   const [filterField, setFilterField] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [filterOptions, setFilterOptions] = useState([]);
+  const [filterApplied, setFilterApply] = useState(false);
   const itemsPerPage = 9;
   const navigate = useNavigate();
 
@@ -98,6 +99,41 @@ const LandingPage = () => {
     navigate(`/editCard/${cardId}`);
   };
 
+  const applyFilter = () => {
+    setFilterApply(true);
+    fetchCards();
+  };
+  /*
+  const resetFilter = () => {
+    setFilterField("");
+    setFilterValue("");
+    setFilterApply(false);
+
+    // Ensure fetchCards() runs after state update
+    setTimeout(() => {
+      fetchCards();
+    }, 0);
+  };*/
+  const resetFilter = async () => {
+    setFilterField("");
+    setFilterValue("");
+
+    try {
+      const resp = await httpClient.post(
+        "http://127.0.0.1:5000/get_card",
+        {
+          filter_field: "",
+          filter_value: "",
+        },
+        { withCredentials: true }
+      );
+      setCards(resp.data);
+      setFilterApply(false);
+    } catch (error) {
+      console.log("Error resetting filter:", error);
+    }
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentCards = cards.slice(indexOfFirstItem, indexOfLastItem);
@@ -124,73 +160,80 @@ const LandingPage = () => {
       ) : (
         <p>you are not logged in</p>
       )}
-      {user && (
-        <div className="book">
-          <h2>Your Cards:</h2>
+      <div className="book">
+        {user && (
           <div>
-            <select
-              value={filterField}
-              onChange={(e) => setFilterField(e.target.value)}
-            >
-              <option value={""}>Select Filter Field</option>
-              <option value={"sport"}>Sport</option>
-              <option value={"brand"}>Brand</option>
-              <option value={"player"}>Player</option>
-              <option value={"set"}>Set</option>
-              <option value={"year"}>Year</option>
-              <option value={"graded"}>Graded</option>
-            </select>
-            {filterField && (
+            <h2>Your Cards:</h2>
+            <div>
               <select
-                value={filterValue}
-                onChange={(e) => setFilterValue(e.target.value)}
+                value={filterField}
+                onChange={(e) => setFilterField(e.target.value)}
               >
-                <option value="">Select {filterField}</option>
-                {filterOptions.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-                ))}
+                <option value={""}>Select Filter Field</option>
+                <option value={"sport"}>Sport</option>
+                <option value={"brand"}>Brand</option>
+                <option value={"player"}>Player</option>
+                <option value={"set"}>Set</option>
+                <option value={"year"}>Year</option>
+                <option value={"graded"}>Graded</option>
               </select>
-            )}
-            {filterField && filterValue && (
-              <button onClick={fetchCards}>Apply Filter</button>
-            )}
+              {filterField && (
+                <select
+                  value={filterValue}
+                  onChange={(e) => setFilterValue(e.target.value)}
+                >
+                  <option value="">Select {filterField}</option>
+                  {filterOptions.map((option, index) => (
+                    <option key={index} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {filterField && filterValue && (
+                <button onClick={applyFilter}>Apply Filter</button>
+              )}
+              {filterApplied && (
+                <button onClick={resetFilter}>Reset Filter</button>
+              )}
+            </div>
+            <ul class="grid-list">
+              {currentCards.length > 0 ? (
+                currentCards.map((card) => (
+                  <li key={card.id}>
+                    <img
+                      src={require("./" + card.linktopic)}
+                      alt="card"
+                      height={350}
+                      width={250}
+                    />
+                    <br />
+                    {card.player} - {card.brand} {card.set} ({card.year})
+                    {console.log(card.linktopic)}
+                    <button onClick={() => editCard(card.id)}>Edit</button>
+                    <button onClick={() => deleteCard(card.id)}>Delete</button>
+                  </li>
+                ))
+              ) : (
+                <p>No cards found</p>
+              )}
+            </ul>
+            <div>
+              <button onClick={prevPage} disabled={currentPage === 1}>
+                Previous
+              </button>
+              <button
+                onClick={nextPage}
+                disabled={
+                  currentPage === Math.ceil(cards.length / itemsPerPage)
+                }
+              >
+                Next
+              </button>
+            </div>
           </div>
-          <ul class="grid-list">
-            {currentCards.length > 0 ? (
-              currentCards.map((card) => (
-                <li key={card.id}>
-                  <img
-                    src={require("./" + card.linktopic)}
-                    alt="card"
-                    height={350}
-                    width={250}
-                  />
-                  <br />
-                  {card.player} - {card.brand} {card.set} ({card.year})
-                  {console.log(card.linktopic)}
-                  <button onClick={() => editCard(card.id)}>Edit</button>
-                  <button onClick={() => deleteCard(card.id)}>Delete</button>
-                </li>
-              ))
-            ) : (
-              <p>No cards found</p>
-            )}
-          </ul>
-          <div>
-            <button onClick={prevPage} disabled={currentPage === 1}>
-              Previous
-            </button>
-            <button
-              onClick={nextPage}
-              disabled={currentPage === Math.ceil(cards.length / itemsPerPage)}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
       {user ? (
         <div className="button-span">
           <a href="/logout">

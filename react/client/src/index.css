@@ -45,7 +45,7 @@ ul {
   list-style-type: none;
   padding: 0;
   max-width: 300px;
-  align: center;
+  align-self: center;
 }
 
 .grid-list li {
@@ -76,6 +76,11 @@ input {
 }
 
 .book {
-  width: 50%;
-  margin: 0 auto;
+  width: 500px;
+  background-color: beige;
+  border: yellow;
+  border-width: 5px;
+  border-style: solid;
+  align-items: center;
+  margin: auto;
 }
