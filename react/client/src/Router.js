@@ -12,6 +12,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" exact Component={LandingPage} />
+        <Route path="LandingPage" exact Component={LandingPage} />
         <Route component={NotFound} />
         <Route path="login" exact Component={Login} />
         <Route path="register" exact Component={Register} />
