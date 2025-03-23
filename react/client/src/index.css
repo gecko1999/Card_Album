@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   background-color: #62a9c9;
+  text-align: center;
 }
 
 code {
@@ -83,4 +84,11 @@ input {
   border-style: solid;
   align-items: center;
   margin: auto;
+}
+
+.button-span {
+  position: fixed;
+  top: 300px;
+  right: 0;
+  border: 10px;
 }

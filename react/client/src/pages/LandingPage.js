@@ -142,13 +142,13 @@ const LandingPage = () => {
 
   return (
     <div>
-      <h1>This is Starting Page</h1>
+      <h1 className="titleofpage">This is Starting Page</h1>
       {user ? (
         <div>
-          <p>You are loged in {user.username}</p>
+          <p className="userlogin">You are loged in {user.username}</p>
         </div>
       ) : (
-        <p>you are not logged in</p>
+        <p className="userlogin">you are not logged in</p>
       )}
       <div className="book">
         {user && (
@@ -187,7 +187,7 @@ const LandingPage = () => {
                 <button onClick={resetFilter}>Reset Filter</button>
               )}
             </div>
-            <ul class="grid-list">
+            <ul className="grid-list">
               {currentCards.length > 0 ? (
                 currentCards.map((card) => (
                   <li key={card.id}>
